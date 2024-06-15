@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../css/product.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Product Upload</h1>
+        </header>
+        <main>
+            <form id="uploadForm">
+                <div class="form-group">
+                    <label for="itemName">Item Name</label>
+                    <input type="text" id="itemName" name="itemName" required>
+                </div>
+                <div class="form-group">
+                    <label for="itemPrice">Item Price</label>
+                    <input type="number" id="itemPrice" name="itemPrice" required>
+                </div>
+                <div class="form-group">
+                    <label for="itemImage">Upload Image</label>
+                    <input type="file" id="itemImage" name="itemImage" accept="image/*" required>
+                </div>
+                <button type="submit">Upload</button>
+            </form>
+        </main>
+    </div>
+    <script src="./js/product.js"></script>
+</body>
+</html>

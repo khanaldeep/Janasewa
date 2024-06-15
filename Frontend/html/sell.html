@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../css/sell.css" rel="stylesheet">
+    <title>Sell Page</title>
+  
+
+   
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+    apiKey: "AIzaSyCwzwiuzcu4RfMf5vfGDUUBTfWRgV1UTDs",
+    authDomain: "green-street-20e5e.firebaseapp.com",
+    projectId: "green-street-20e5e",
+    storageBucket: "green-street-20e5e.appspot.com",
+    messagingSenderId: "420682581480",
+    appId: "1:420682581480:web:6428c4a04a472d94c8905d",
+    measurementId: "G-VQ7GX9TK6T"
+};
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Function to submit form data and upload image to Firebase Storage
+        function submitForm(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const location = document.getElementById('location').value;
+            const category = document.getElementById('category').value;
+            const image = document.getElementById('image').files[0];
+            const description = document.getElementById('description').value;
+            const email = document.getElementById('email').value;
+
+            // Determine the storage path and database path based on the category
+            let storagePath, databasePath;
+            if (category === 'paper_recycle') {
+                storagePath = 'papercycle/' + image.name;
+                databasePath = 'paper_recycle/items';
+            } else if (category === 'clothe_recycle') {
+                storagePath = 'clothecycle/' + image.name;
+                databasePath = 'clothe_recycle/items';
+            } else if (category === 'plastic_recycle') {
+                storagePath = 'plasticcycle/' + image.name;
+                databasePath = 'plastic_recycle/items';
+            }
+
+            // Storage reference
+            const storageRef = firebase.storage().ref(storagePath);
+
+            // Upload image to Firebase Storage
+            const uploadTask = storageRef.put(image);
+
+            uploadTask.on('state_changed', 
+                (snapshot) => {
+                    // Track upload progress if needed
+                },
+                (error) => {
+                    console.error('Error uploading image to Firebase Storage', error);
+                },
+                () => {
+                    // Image uploaded successfully, get download URL
+                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        // Save metadata (form data) to Firebase Realtime Database
+                        const newItemRef = firebase.database().ref(databasePath).push();
+                        newItemRef.set({
+                            name: name,
+                            location: location,
+                            description: description,
+                            email: email,
+                            imageURL: downloadURL  // Store image URL in database
+                        }).then(() => {
+                            alert('Form submitted successfully!');
+                            // Optionally clear the form fields after submission
+                            document.getElementById('contact-form').reset();
+                        }).catch((error) => {
+                            console.error('Error writing to Firebase Database', error);
+                        });
+                    });
+                }
+            );
+        }
+
+        // Add event listener to the form
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('contact-form').addEventListener('submit', submitForm);
+        });
+    </script>
+</head>
+<body>
+    <header class="header">
+        <h1>Sell Your Item</h1>
+    </header>
+    <main>
+        <form id="contact-form">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <select id="location" name="location" required>
+                    <option value="">Select a location</option>
+                    <option value="new_york">New York</option>
+                    <option value="los_angeles">Los Angeles</option>
+                    <option value="chicago">Chicago</option>
+                    <option value="houston">Houston</option>
+                    <option value="miami">Miami</option>
+                    <option value="san_francisco">San Francisco</option>
+                    <option value="seattle">Seattle</option>
+                    <option value="boston">Boston</option>
+                    <option value="las_vegas">Las Vegas</option>
+                    <option value="atlanta">Atlanta</option>
+                    <!-- Add more options as needed -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <select id="category" name="category" required>
+                    <option value="">Select a category</option>
+                    <option value="paper_recycle">Paper Recycle</option>
+                    <option value="clothe_recycle">Clothe Recycle</option>
+                    <option value="plastic_recycle">Plastic Recycle</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="image">Select image:</label>
+                <input type="file" id="image" name="image" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" cols="50" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <input type="submit" value="Submit">
+        </form>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="column">
+                <h5>Find Us</h5>
+                <p class="mb10">We ensure that visitors can quickly locate the information if they need to connect with us or visit our following social platforms.</p>
+                <p><i class="fa fa-location-arrow"></i>Balkumari,Lalitpur</p>
+                <p><i class="fa fa-phone"></i> 01-245678 </p>
+                <p><i class="fa fa-envelope"></i> info@janasewa.com </p>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-6 col">
+                <h5 class="headin5_amrc col_white_amrc pt2">Follow us</h5>
+                <!--headin5_amrc ends here-->
+                <ul class="footer_ul2_amrc">
+                    <li>
+                        <a href="#"><i class="fab fa-twitter fleft padding-right"></i> </a>
+                        <p>Facebook<br><a href="#">https://www.fb.com/</a></p>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fab fa-twitter fleft padding-right"></i> </a>
+                        <p>Instagram<br><a href="#">https://www.insta.com/</a></p>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fab fa-twitter fleft padding-right"></i> </a>
+                        <p>Twitter<br><a href="#">https://www.twitter.com/</a></p>
+                    </li>
+                </ul>
+                <!--footer_ul2_amrc ends here-->
+            </div>
+            <div class="column">
+                <h5>Quick Links</h5>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="column">
+                <h5>Follow Us</h5>
+                <ul class="social_footer_ul">
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            <p class="copyright">
+                &copy; 2024 Green Street. All rights reserved.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

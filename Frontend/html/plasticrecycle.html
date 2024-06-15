@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plastic Recycle Items</title>
+    <link rel="stylesheet" href="../css/plasticrecycle.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Plastic Recycle Items</h1>
+    </header>
+    <main id="plastic-recycle-items">
+        <!-- Content will be dynamically populated by JavaScript -->
+    </main>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="scripts.js"></script>
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+    apiKey: "AIzaSyCwzwiuzcu4RfMf5vfGDUUBTfWRgV1UTDs",
+    authDomain: "green-street-20e5e.firebaseapp.com",
+    projectId: "green-street-20e5e",
+    storageBucket: "green-street-20e5e.appspot.com",
+    messagingSenderId: "420682581480",
+    appId: "1:420682581480:web:6428c4a04a472d94c8905d",
+    measurementId: "G-VQ7GX9TK6T"
+};
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Reference to the plastic recycle items in Firebase Realtime Database
+        const plasticRecycleRef = firebase.database().ref('plastic_recycle/items');
+
+        // Function to fetch and display plastic recycle items
+        function fetchPlasticRecycleItems() {
+            plasticRecycleRef.once('value', (snapshot) => {
+                const items = snapshot.val();
+                if (items) {
+                    const plasticRecycleItemsContainer = document.getElementById('plastic-recycle-items');
+                    plasticRecycleItemsContainer.innerHTML = ''; // Clear previous content
+
+                    Object.keys(items).forEach((key) => {
+                        const item = items[key];
+                        const { name, location, description, email, imageURL } = item;
+
+                        // Create HTML elements for displaying each item
+                        const itemContainer = document.createElement('div');
+                        itemContainer.classList.add('item');
+
+                        const imageElement = document.createElement('img');
+                        imageElement.src = imageURL;
+                        imageElement.alt = name;
+                        itemContainer.appendChild(imageElement);
+
+                        const detailsContainer = document.createElement('div');
+                        detailsContainer.classList.add('details');
+                        detailsContainer.innerHTML = `
+                            <h2>${name}</h2>
+                            <p><strong>Location:</strong> ${location}</p>
+                            <p><strong>Description:</strong> ${description}</p>
+                            <p><strong>Email:</strong> ${email}</p>
+                        `;
+                        itemContainer.appendChild(detailsContainer);
+
+                        plasticRecycleItemsContainer.appendChild(itemContainer);
+                    });
+                } else {
+                    console.log('No plastic recycle items found.');
+                }
+            });
+        }
+
+        // Fetch plastic recycle items on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchPlasticRecycleItems();
+        });
+    </script>
+</body>
+</html>

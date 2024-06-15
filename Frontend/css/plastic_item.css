@@ -1,0 +1,135 @@
+/* Common styles for buy page and item pages */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    animation: slideDown 0.5s ease-out;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 2.5em;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+main {
+    padding: 20px;
+}
+
+.items-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.item {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: calc(33.333% - 20px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: fadeInUp 0.5s ease-out;
+    overflow: hidden;
+}
+
+.item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.item img {
+    max-width: 100%;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.item img:hover {
+    transform: scale(1.05);
+}
+
+.item h3 {
+    margin-top: 10px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.item p {
+    margin: 10px 0;
+    font-size: 1em;
+    color: #555;
+}
+
+.buy-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    font-size: 1em;
+}
+
+.buy-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .item {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .item {
+        width: calc(100% - 20px);
+    }
+}

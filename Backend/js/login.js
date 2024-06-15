@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         lname: snapshot.val().lastname,
                         cont: snapshot.val().contact
                     }));
-                    window.location.href = 'hi.html';
+                    window.location.href = 'dashuser.html';
                 } else {
                     alert('No user data found.');
                 }

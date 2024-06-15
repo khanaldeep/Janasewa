@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../css/product.css">
+    <link rel="stylesheet" href="..//css/product.css">
 </head>
 <body>
     <div class="container">
@@ -25,10 +25,22 @@
                     <label for="itemImage">Upload Image</label>
                     <input type="file" id="itemImage" name="itemImage" accept="image/*" required>
                 </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="">Select a category</option>
+                        <option value="paper_recycle">Paper Recycle</option>
+                        <option value="plastic_recycle">Plastic Recycle</option>
+                        <option value="clothe_recycle">Clothe Recycle</option>
+                    </select>
+                </div>
                 <button type="submit">Upload</button>
             </form>
         </main>
     </div>
-    <script src="./js/product.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="/Janasewa/Backend/js/product.js"></script>
 </body>
 </html>

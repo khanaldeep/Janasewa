@@ -8,35 +8,80 @@
 </head>
 <body>
   <style>
-    body {
+body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background: linear-gradient(-45deg, #6cc9ad, rgb(98, 163, 203), #2f887c, #c780db);
 }
 
 .header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 1em;
     text-align: center;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: 1.5rem;
+    border-radius: 10px;
+    margin: 15px auto;
+    width: 40%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 main {
     padding: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .report-item {
     border: 1px solid #ddd;
-    margin: 1em 0;
+    margin: 1em;
     padding: 1em;
-    display: flex;
-    flex-direction: column;
+    width: 300px; /* Fixed width for all boxes */
+    box-sizing: border-box;
+    display: inline-block; /* Display images in horizontal order */
     align-items: center;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 
 .report-item img {
-    max-width: 100%;
-    height: auto;
+    width: 100%;
+    height: 200px; /* Fixed height for images */
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.report-item h3 {
+    font-size: 1.25rem;
+    margin: 0.5em 0;
+    color: #333;
+}
+
+.report-item p {
+    font-size: 1rem;
+    color: #666;
+    text-align: center;
+    margin: 0.25em 0; /* Maintain a small gap between text elements */
+}
+
+.report-item .label {
+    font-weight: bold; /* Make description and location labels bold */
+    display: inline;
+}
+
+.report-item .info {
+    font-weight: normal;
+}
+
+@media (max-width: 768px) {
+    .report-item {
+        width: 90%;
+    }
 }
 
   </style>
